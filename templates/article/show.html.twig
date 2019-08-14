@@ -32,9 +32,13 @@
                         <div class="card-body">
                             <p class="card-text"><b>{{ comment.user.fullName }}</b></p>
                             <p class="card-text pl-5">{{ comment.text }}</p>
-                            {% if app.user is not null and app.user.id is same as(comment.user.id) %}
-                                <a href="{{ path('comment_edit', {'id': comment.id}) }}" class="btn btn-sm btn-outline-info float-right">Edit Comment</a>
-                            {% endif %}
+                            <div class="float-right">
+
+                                {% if app.user is not null and app.user.id is same as(comment.user.id) %}
+                                    <a href="{{ path('comment_edit', {'id': comment.id}) }}" class="btn btn-sm btn-outline-info float-right">Edit Comment</a>
+                                    {{ include('comment/_delete_form.html.twig') }}
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 {% endfor %}
