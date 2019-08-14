@@ -1,11 +1,23 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% if user is defined %}
-        <p>Welcome {{ user.fullName }}</p>
-    {% else %}
-        <p>Welcome to the homepage. Please log in</p>
-    {% endif %}
+    <div class="row">
+        <div class="col">
+            {% if user is defined %}
+            <a href="#" class="btn btn-success"><i class="fas fa-plus-circle"></i> New Article</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {% if user is defined %}
+                <p>Welcome {{ user.fullName }}</p>
+            {% else %}
+                <p>Welcome to the homepage. Please log in</p>
+            {% endif %}
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block title %}
