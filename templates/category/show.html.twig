@@ -3,20 +3,29 @@
 {% block title %}Category{% endblock %}
 
 {% block body %}
-    <h1>Category</h1>
+    <h1>Category - {{ category.name }}</h1>
 
+    {% if category.articles is defined %}
     <table class="table">
+        <thead>
+            <tr>
+                <th>Article</th>
+                <th>Author</th>
+            </tr>
+        </thead>
         <tbody>
+           {% for article in category.articles %}
             <tr>
-                <th>Id</th>
-                <td>{{ category.id }}</td>
+                <td><a href="{{ path('article_show', {'id': article.id}) }}">{{ article.name }}</a></td>
+                <td>{{ article.user.fullName }}</td>
             </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ category.name }}</td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
+
+    {% else %}
+    <p>Currently there is no articles in this category</p>
+    {% endif %}
 
     <a href="{{ path('category_index') }}">back to list</a>
 
