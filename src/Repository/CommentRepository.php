@@ -19,6 +19,15 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
+    public function removeAll($id)
+    {
+        return $this->createQueryBuilder('q')
+            ->delete()
+            ->where('q.article = :val')
+            ->setParameter('val', $id)
+            ->getQuery()
+            ->getResult();
+    }
     // /**
     //  * @return Comment[] Returns an array of Comment objects
     //  */
