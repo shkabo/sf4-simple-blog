@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -27,6 +29,7 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/new", name="article_new", methods={"GET","POST"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function new(Request $request): Response
     {
@@ -61,9 +64,13 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="article_edit", methods={"GET","POST"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function edit(Request $request, Article $article): Response
     {
+        if ($article->getUser()->getId() !== $this->getUser()->getId()) {
+            throw new UnauthorizedHttpException('', 'You are not allowed to edit this Article');
+        }
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
@@ -81,9 +88,13 @@ class ArticleController extends AbstractController
 
     /**
      * @Route("/{id}", name="article_delete", methods={"DELETE"})
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function delete(Request $request, Article $article): Response
     {
+        if ($article->getUser()->getId() !== $this->getUser()->getId()) {
+            throw new UnauthorizedHttpException('');
+        }
         if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($article);
