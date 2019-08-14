@@ -13,6 +13,7 @@
         "symfony/framework-bundle": "4.3.*",
         "symfony/maker-bundle": "^1.12",
         "symfony/orm-pack": "^1.0",
+        "symfony/security-bundle": "4.3.*",
         "symfony/security-csrf": "4.3.*",
         "symfony/twig-bundle": "4.3.*",
         "symfony/validator": "4.3.*",
@@ -20,6 +21,8 @@
         "symfony/yaml": "4.3.*"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.2",
+        "fzaninotto/faker": "^1.8",
         "sensiolabs/security-checker": "^6.0",
         "symfony/debug-pack": "^1.0",
         "symfony/profiler-pack": "^1.0"
