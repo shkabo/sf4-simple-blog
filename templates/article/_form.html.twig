@@ -1,0 +1,27 @@
+{{ form_start(form) }}
+<div class="form-group">
+    {{form_label(form.name, 'Name')}}
+    {{ form_widget(form.name) }}
+    <small>{{ form_help(form.name) }}</small>
+    <div class="form-error">
+        {{ form_errors(form.name) }}
+    </div>
+</div>
+<div class="form-group">
+    {{ form_label(form.text, 'Article Content') }}
+    {{ form_widget(form.text, {'attr': {'rows': 18}}) }}
+    <small>{{ form_help(form.text) }}</small>
+    <div class="form-error">
+        {{  form_errors(form.text) }}
+    </div>
+</div>
+<div class="form-group">
+    {{ form_label(form.category) }}
+    {{ form_widget(form.category) }}
+    <small>{{ form_help(form.category) }}</small>
+    <div class="form-error">
+        {{ form_errors(form.category) }}
+    </div>
+</div>
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
