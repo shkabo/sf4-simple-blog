@@ -3,30 +3,75 @@
 {% block title %}Article{% endblock %}
 
 {% block body %}
-    <h1>Article</h1>
+    <div class="row">
+        <div class="col">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Name</th>
-                <td>{{ article.name }}</td>
-            </tr>
-            <tr>
-                <th>Category</th>
-                <td><a href="{{ path('category_show', {'id': article.category.id}) }}">{{ article.category.name }}</a></td>
-            </tr>
-            <tr>
-                <th>Text</th>
-                <td>{{ article.text }}</td>
-            </tr>
-        </tbody>
-    </table>
+            <h1>Article</h1>
 
-    <a href="{{ path('article_index') }}" class="btn btn-light"><i class="fa fa-arrow-left"></i> Back to list</a>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ article.name }}</td>
+                </tr>
+                <tr>
+                    <th>Category</th>
+                    <td><a href="{{ path('category_show', {'id': article.category.id}) }}">{{ article.category.name }}</a></td>
+                </tr>
+                <tr>
+                    <th>Text</th>
+                    <td>{{ article.text }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <hr>
 
-    <a href="{{ path('article_edit', {'id': article.id}) }}" class="btn btn-primary"><i class="far fa-edit"></i> Edit</a>
+            {% if article.comments is defined %}
+                {% for comment in article.comments %}
+                    <div class="card border-light mb-3">
+                        <div class="card-body">
+                            <p class="card-text"><b>{{ comment.user.fullName }}</b></p>
+                            <p class="card-text pl-5">{{ comment.text }}</p>
+                            {% if app.user is not null and app.user.id is same as(comment.user.id) %}
+                                <a href="{{ path('comment_edit', {'id': comment.id}) }}" class="btn btn-sm btn-outline-info float-right">Edit Comment</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% if app.user is not null %}
+                <div class="row">
+                    <div class="col-7">
+                        <h4>Add Comment</h4>
+                        <form method="POST" action="{{ path('comment_new', {'id': article.id}) }}">
+                            <div class="form-group">
+                                <textarea class="form-control" id="text" name="comment[text]" rows="5"></textarea>
+                            </div>
+                            <input type="hidden" name="comment[_token]"
+                                   value="{{ csrf_token('comment') }}"
+                            >
+                            <button type="submit" class="btn btn-success mb-4">Save</button>
+                        </form>
+                    </div>
+                </div>
 
-    <div class="float-right">
-        {{ include('article/_delete_form.html.twig') }}
+            {% endif %}
+        </div>
     </div>
+
+    <div class="row">
+        <div class="col">
+
+            <a href="{{ path('article_index') }}" class="btn btn-light"><i class="fa fa-arrow-left"></i> Back to list</a>
+
+            {% if app.user is not null and app.user.id is same as(article.user.id) %}
+            <a href="{{ path('article_edit', {'id': article.id}) }}" class="btn btn-primary"><i class="far fa-edit"></i> Edit</a>
+
+            <div class="float-right">
+                {{ include('article/_delete_form.html.twig') }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
 {% endblock %}

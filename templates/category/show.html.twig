@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Category - {{ category.name }}</h1>
 
-    {% if category.articles is defined %}
+    {% if category.articles|length > 0 %}
     <table class="table">
         <thead>
             <tr>
@@ -24,14 +24,16 @@
     </table>
 
     {% else %}
-    <p>Currently there is no articles in this category</p>
+    <p>Currently there are no articles in this category</p>
     {% endif %}
 
     <a href="{{ path('category_index') }}" class="btn btn-light"><i class="fa fa-arrow-left"></i> Back to list</a>
 
+    {% if app.user is not null %}
     <a href="{{ path('category_edit', {'id': category.id}) }}" class="btn btn-primary"><i class="far fa-edit"></i> Edit</a>
 
     <div class="float-right">
         {{ include('category/_delete_form.html.twig') }}
     </div>
+    {% endif %}
 {% endblock %}

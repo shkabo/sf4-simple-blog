@@ -18,7 +18,9 @@
                 <td>{{ category.name }}</td>
                 <td class="text-right">
                     <a href="{{ path('category_show', {'id': category.id}) }}" class="btn btn-outline-info btn-sm"><i class="far fa-eye"></i> Show</a>
+                    {% if app.user is not null %}
                     <a href="{{ path('category_edit', {'id': category.id}) }}" class="btn btn-outline-primary btn-sm"><i class="far fa-edit"></i> Edit</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
@@ -28,6 +30,7 @@
         {% endfor %}
         </tbody>
     </table>
-
+    {% if app.user is not null %}
     <a href="{{ path('category_new') }}" class="btn btn-success"><i class="far fa-plus-square"></i> Create new</a>
+    {% endif %}
 {% endblock %}
