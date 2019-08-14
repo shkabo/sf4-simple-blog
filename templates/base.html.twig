@@ -14,7 +14,7 @@
         <h5 class="my-0 mr-md-auto font-weight-normal">SimpleBlog</h5>
         <nav class="my-2 my-md-0 mr-md-3">
             <a class="p-2 text-dark" href="{{ path('app_articles_list') }}">Articles</a>
-            <a class="p-2 text-dark" href="{{ path('app_category_list')}}">Category</a>
+            <a class="p-2 text-dark" href="{{ path('category_index')}}">Category</a>
             {% if not app.user %}
             <a class="p-2 text-dark" href="{{ path('app_login')}}">Login</a>
             {% else %}
