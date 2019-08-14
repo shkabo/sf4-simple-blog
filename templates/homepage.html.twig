@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if user is defined %}
+        <p>Welcome {{ user.fullName }}</p>
+    {% else %}
+        <p>Welcome to the homepage. Please log in</p>
+    {% endif %}
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
